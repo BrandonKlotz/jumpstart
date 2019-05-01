@@ -76,7 +76,7 @@ end
 def add_users
   # Install Devise
   run "bundle pristine"
-  generate "devise:install"
+  run "rails g devise:install"
 
   # Configure Devise
   environment "config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }",
@@ -84,14 +84,10 @@ def add_users
   route "root to: 'home#index'"
 
   # Devise notices are installed via Bootstrap
-  generate "devise:views:bootstrapped"
+  run "rails g devise:views:bootstrapped"
 
   # Create Devise User
-  generate :devise, "User",
-           "first_name",
-           "last_name",
-           "announcements_last_read_at:datetime",
-           "admin:boolean"
+  run "rails g :devise, 'User', 'first_name', 'last_name', 'announcements_last_read_at:datetime', 'admin:boolean'"
 
   # Set admin default to false
   in_root do
@@ -168,17 +164,17 @@ def add_sidekiq
 end
 
 def add_announcements
-  generate "model Announcement published_at:datetime announcement_type name description:text"
+  run "rails g model Announcement published_at:datetime announcement_type name description:text"
   route "resources :announcements, only: [:index]"
 end
 
 def add_notifications
-  generate "model Notification recipient_id:bigint actor_id:bigint read_at:datetime action:string notifiable_id:bigint notifiable_type:string"
+  run "rails g model Notification recipient_id:bigint actor_id:bigint read_at:datetime action:string notifiable_id:bigint notifiable_type:string"
   route "resources :notifications, only: [:index]"
 end
 
 def add_administrate
-  generate "administrate:install"
+  run "rails g administrate:install"
 
   #gsub_file "app/dashboards/announcement_dashboard.rb",
     #/announcement_type: Field::String/,
