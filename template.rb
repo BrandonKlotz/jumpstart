@@ -254,11 +254,11 @@ end
 add_template_repository_to_source_path
 
 add_gems
-clean_gems
 
 after_bundle do
   set_application_name
   stop_spring
+  clean_gems
   add_users
   add_webpack
   add_javascript
