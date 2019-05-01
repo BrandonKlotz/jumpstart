@@ -61,6 +61,10 @@ def add_gems
   end
 end
 
+def clean_gems
+  run "bundle pristine"
+end
+
 def set_application_name
   # Add Application Name to Config
   if rails_5?
@@ -250,6 +254,7 @@ end
 add_template_repository_to_source_path
 
 add_gems
+clean_gems
 
 after_bundle do
   set_application_name
