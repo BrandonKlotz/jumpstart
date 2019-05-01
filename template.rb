@@ -61,10 +61,6 @@ def add_gems
   end
 end
 
-def clean_gems
-  run "bundle pristine"
-end
-
 def set_application_name
   # Add Application Name to Config
   if rails_5?
@@ -79,6 +75,7 @@ end
 
 def add_users
   # Install Devise
+  run "bundle pristine"
   generate "devise:install"
 
   # Configure Devise
@@ -258,7 +255,6 @@ add_gems
 after_bundle do
   set_application_name
   stop_spring
-  clean_gems
   add_users
   add_webpack
   add_javascript
